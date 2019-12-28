@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: accounts
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: accounts-ingress
+  namespace: accounts
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+  - hosts:
+    - accounts.tanndev.com
+    secretName: accounts-tls
+  rules:
+  - host: accounts.tanndev.com
+    http:
+      paths:
+      - backend:
+          serviceName: accounts
+          servicePort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: accounts-data-ingress
+  namespace: accounts
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+  - hosts:
+    - database.accounts.tanndev.com
+    secretName: accounts-data-tls
+  rules:
+  - host: database.accounts.tanndev.com
+    http:
+      paths:
+      - backend:
+          serviceName: couchdb
+          servicePort: 5984
