@@ -1,7 +1,10 @@
 #!/usr/bin/env groovy
 
 pipeline {
-    agent any
+    agent {
+        label 'kubectl'
+    }
+
     stages {
         stage('Deploy Configuration') {
             when {
