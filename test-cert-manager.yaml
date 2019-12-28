@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager-test
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: test-letsencrypt
+  namespace: cert-manager-test
+spec:
+  acme:
+    email: james.tanner@tanndev.com
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-test-account-key
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: test-letsencrypt-cert
+  namespace: cert-manager-test
+spec:
+  secretName: test-letsencrypt-cert-secret
+  issuerRef:
+    name: test-letsencrypt
+  dnsNames:
+  - test-cert-manager.tanndev.com

@@ -18,7 +18,7 @@ watch kubectl get svc --namespace=ingress-nginx
 
 # Set up cert-manager namespace and install the cert-manager with its CRDs.
 kubectl create namespace cert-manager
-kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.12.0/cert-manager.yaml
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.12.0/cert-manager.yaml
 
 # Apply the cert-issuer from this repo.
 kubectl apply -f cert-issuer.yaml
@@ -28,4 +28,7 @@ kubectl apply -f cert-test.yaml
 
 # Wait for the certificate to be issued.
 watch kubectl describe certificate cert-test-tls
+
+# Shut down the test app.
+kubectl delete -f cert-test.yaml
 ```
