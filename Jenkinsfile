@@ -15,8 +15,9 @@ pipeline {
                         credentialsId: 'microservices-kubernetes-token',
                         serverUrl: "$MICROSERVICES_KUBERNETES_SERVER"
                 ]) {
-                    // TODO Deploy configuration changes
-                    sh 'kubectl get pods -A'
+                    // Deploy configurations
+                    sh 'kubectl apply -f cert-issuer.yaml'
+                    sh 'kubectl apply -f jenkins-account.yaml'
                 }
             }
         }
