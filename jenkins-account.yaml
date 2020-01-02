@@ -9,8 +9,8 @@ kind: ClusterRole
 metadata:
   name: jenkins
 rules:
-- apiGroups: ["", apps]
-  resources: [namespaces, deployments, services, replicasets, pods, persistentvolumeclaims]
+- apiGroups: ["", apps, networking.k8s.io]
+  resources: [namespaces, ingresses, deployments, services, replicasets, pods, persistentvolumeclaims]
   verbs: ["*"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
